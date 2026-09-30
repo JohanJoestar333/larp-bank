@@ -1,0 +1,6 @@
+{
+  "name": "PropStudio: Fictional FinTech & Creator Dashboards",
+  "description": "Mobile-first fictional dashboard prop simulator for filming and investment series. Features realistic simulated YouTube Studio, Shopify, Ledger, and Banking platforms with editable metrics and scenarios.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
