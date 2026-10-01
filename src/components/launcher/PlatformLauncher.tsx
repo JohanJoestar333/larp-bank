@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { PlatformType } from '../../types';
 import { PlatformCardLogo, PLATFORM_LOGOS } from '../../config/platformLogos';
+import { HomeScreenIcons } from './HomeScreenIcons';
 
 export const PlatformLauncher: React.FC = () => {
   const {
@@ -181,6 +182,9 @@ export const PlatformLauncher: React.FC = () => {
             ))}
           </div>
         </div>
+
+        {/* Downloadable Home Screen Icons + iPhone tutorial */}
+        <HomeScreenIcons />
 
         {/* Filmmaker Quick Notification Triggers */}
         <div className="rounded-[22px] bg-[#121214] border border-white/[0.08] p-4 shadow-xl space-y-3">

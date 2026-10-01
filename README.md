@@ -67,7 +67,7 @@ When filming on an iPhone, you can make these dashboards open and look identical
 
 Using Apple's built-in **Shortcuts** app, you can assign the official app icon and name to each platform link so your iPhone home screen looks authentic on camera:
 
-1. Download or screenshot the official app icon (YouTube Studio, Shopify, Ledger, or Bank) to your iPhone Photos.
+1. On the launcher, open the **Home Screen Icons** card and tap **Download** on the icon you want (saved to Files, or press-and-hold the icon → *Add to Photos*). Source PNGs live in `/public/icons/`.
 2. Open the **Shortcuts** app on your iPhone.
 3. Tap the **+** button in the top right corner to create a new shortcut.
 4. Tap **Add Action**, search for **"Open URL"**, and select it.
@@ -77,8 +77,8 @@ Using Apple's built-in **Shortcuts** app, you can assign the official app icon a
    - For Ledger: `https://your-domain.vercel.app/ledger`
    - For Bank: `https://your-domain.vercel.app/bank`
 6. Tap the dropdown arrow at the top (next to "Open URL") and select **"Add to Home Screen"**.
-7. Tap the placeholder icon under **Home Screen Name and Icon** and choose **"Choose Photo"**.
-8. Select the real app icon from your photo library.
+7. Tap the placeholder icon under **Home Screen Name and Icon** and choose **"Choose File"** (or **"Choose Photo"** if you added it to Photos).
+8. Pick the icon you downloaded.
 9. Rename the shortcut to match the actual app (e.g., `Studio`, `Shopify`, `Ledger`, or `Bank`).
 10. Tap **Add**.
 
