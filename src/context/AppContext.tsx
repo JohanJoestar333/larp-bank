@@ -151,7 +151,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       const stored = localStorage.getItem(STORAGE_KEY_PHASES);
       if (stored) {
-        const parsed = JSON.parse(stored);
+        // Older builds saved image paths under /src/assets (dev-only); production serves /images.
+        const parsed = JSON.parse(stored.split('/src/assets/images/').join('/images/'));
         if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
     } catch (e) {

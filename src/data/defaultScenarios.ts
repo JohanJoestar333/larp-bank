@@ -1,14 +1,14 @@
 import { Phase, ShopifyData, YouTubeData, CryptoData, BankData } from '../types';
 
-export const INVOXION_AVATAR = '/src/assets/images/invoxion_avatar_1790804765159.jpg';
-export const THUMB_SKINWALKER = '/src/assets/images/thumb_skinwalker_1790804774764.jpg';
-export const THUMB_UNEXPLAINABLE = '/src/assets/images/thumb_unexplainable_1790804784199.jpg';
-export const THUMB_APPALACHIAN = '/src/assets/images/thumb_appalachian_1790804793432.jpg';
+export const INVOXION_AVATAR = '/images/invoxion_avatar_1790804765159.jpg';
+export const THUMB_SKINWALKER = '/images/thumb_skinwalker_1790804774764.jpg';
+export const THUMB_UNEXPLAINABLE = '/images/thumb_unexplainable_1790804784199.jpg';
+export const THUMB_APPALACHIAN = '/images/thumb_appalachian_1790804793432.jpg';
 
-export const THUMB_DESK = '/src/assets/images/yt_video_thumb_desk_1790794572593.jpg';
-export const THUMB_FINANCE = '/src/assets/images/yt_video_thumb_finance_1790794583180.jpg';
-export const PROD_BOTTLE = '/src/assets/images/shopify_prod_bottle_1790794593124.jpg';
-export const PROD_WALLET = '/src/assets/images/shopify_prod_wallet_1790794601962.jpg';
+export const THUMB_DESK = '/images/yt_video_thumb_desk_1790794572593.jpg';
+export const THUMB_FINANCE = '/images/yt_video_thumb_finance_1790794583180.jpg';
+export const PROD_BOTTLE = '/images/shopify_prod_bottle_1790794593124.jpg';
+export const PROD_WALLET = '/images/shopify_prod_wallet_1790794601962.jpg';
 
 export function recalculateShopify(data: Partial<ShopifyData>): ShopifyData {
   const ordersCount = data.ordersCount ?? 26;
