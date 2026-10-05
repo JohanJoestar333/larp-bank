@@ -1,17 +1,20 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { PWAInstallButton } from '../pwa/PWAInstallButton';
-import {
-  SlidersHorizontal,
-  Film,
-  Lock,
-  BellRing,
-  ChevronRight,
-  Layers,
-} from 'lucide-react';
-import { PlatformType } from '../../types';
+import { SlidersHorizontal, Film, Lock, BellRing, ChevronRight } from 'lucide-react';
 import { PlatformCardLogo, PLATFORM_LOGOS } from '../../config/platformLogos';
 import { HomeScreenIcons } from './HomeScreenIcons';
+
+const SF_FONT = '-apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, system-ui, sans-serif';
+
+// iOS grouped-list building blocks
+const GROUP = 'rounded-xl bg-[#1c1c1e] overflow-hidden';
+const ROW =
+  'relative flex items-center gap-3 px-4 py-3 text-left w-full active:bg-white/5 transition after:absolute after:bottom-0 after:right-0 after:h-px after:bg-white/[0.08] last:after:hidden';
+
+const SectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <h2 className="px-4 pb-1.5 text-[13px] uppercase text-[#8e8e93]">{children}</h2>
+);
 
 export const PlatformLauncher: React.FC = () => {
   const {
@@ -57,209 +60,159 @@ export const PlatformLauncher: React.FC = () => {
     };
   });
 
+  const triggers = [
+    {
+      label: 'Simulate Order Ping',
+      icon: BellRing,
+      bg: 'bg-[#30d158]',
+      run: () =>
+        triggerNotification({
+          id: `notif-${Date.now()}`,
+          platform: 'shopify',
+          title: 'New order received',
+          message: `${activePhase.shopify.recentOrders[0]?.customerName || 'Elena Vance'} placed order #${Math.floor(1000 + Math.random() * 9000)}`,
+          amount: `+$185.00`,
+          timestamp: 'now',
+        }),
+    },
+    {
+      label: 'Simulate Deposit Wire',
+      icon: BellRing,
+      bg: 'bg-[#ff9f0a]',
+      run: () =>
+        triggerNotification({
+          id: `notif-${Date.now()}`,
+          platform: 'bank',
+          title: 'Wire Deposit Cleared',
+          message: `Wire transfer of $14,200.00 from Stripe Payments has settled.`,
+          amount: `+$14,200`,
+          timestamp: 'now',
+        }),
+    },
+    {
+      label: 'Simulate Viral Spike',
+      icon: BellRing,
+      bg: 'bg-[#ff453a]',
+      run: () =>
+        triggerNotification({
+          id: `notif-${Date.now()}`,
+          platform: 'youtube',
+          title: 'Trending Milestone',
+          message: 'Your video just passed 50,000 views in the first 24 hours!',
+          amount: '+50k',
+          timestamp: 'now',
+        }),
+    },
+    {
+      label: 'Preview Lock Screen',
+      icon: Lock,
+      bg: 'bg-[#0a84ff]',
+      run: () => setIsLockScreenVisible(true),
+    },
+  ];
+
   return (
-    <div className="flex flex-col min-h-full bg-black text-[#f5f5f7] select-none pb-24">
-      {/* Top Bar - Clean Apple minimalism */}
-      <header className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.06] backdrop-blur-xl sticky top-0 z-30 bg-black/90">
-        <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center font-black text-xs text-white">
-            P
+    <div
+      className="flex flex-col min-h-full bg-black text-white select-none pb-24"
+      style={{ fontFamily: SF_FONT }}
+    >
+      <header className="px-5 pt-[max(env(safe-area-inset-top),14px)] pb-2 max-w-lg mx-auto w-full">
+        <div className="flex items-center justify-between h-8">
+          <div className="min-w-0">
+            <PWAInstallButton compact />
           </div>
-          <div>
-            <span className="text-xs font-bold tracking-tight text-white block">
-              PropStudio
-            </span>
-            <span className="text-[10px] text-[#86868b]">Filmmaking Suite</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2">
-          {/* PWA Install */}
-          <PWAInstallButton compact />
-
-          {/* Film Mode vs Edit Mode Toggle */}
-          <button
-            onClick={toggleAppMode}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition active:scale-95 ${
-              appMode === 'film'
-                ? 'bg-white/10 text-white hover:bg-white/15'
-                : 'bg-blue-600 text-white shadow-sm'
-            }`}
-          >
-            <Film className="w-3.5 h-3.5" />
-            <span>{appMode === 'film' ? 'Film Mode' : 'Edit Mode'}</span>
-          </button>
-
-          {/* Control Center Drawer Button */}
-          <button
-            onClick={() => setIsControlCenterOpen(true)}
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white/80 transition"
-            title="Open Control Center"
-          >
-            <SlidersHorizontal className="w-4 h-4" />
-          </button>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-1 px-5 py-5 space-y-6 max-w-lg mx-auto w-full">
-        {/* Active Phase Banner */}
-        <div className="rounded-[22px] bg-[#121214] border border-white/[0.08] p-4 shadow-xl">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold text-[#86868b] uppercase tracking-widest flex items-center gap-1.5">
-              <Layers className="w-3 h-3 text-blue-400" />
-              <span>Current Phase</span>
-            </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleAppMode}
+              className={`flex items-center gap-1.5 h-8 px-3 rounded-full text-[14px] font-medium transition active:opacity-70 ${
+                appMode === 'film' ? 'bg-[#1c1c1e] text-white' : 'bg-[#0a84ff] text-white'
+              }`}
+            >
+              <Film className="w-3.5 h-3.5" />
+              <span className="whitespace-nowrap">{appMode === 'film' ? 'Film Mode' : 'Edit Mode'}</span>
+            </button>
             <button
               onClick={() => setIsControlCenterOpen(true)}
-              className="text-xs text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-0.5"
+              aria-label="Open Control Center"
+              className="w-8 h-8 rounded-full bg-[#1c1c1e] flex items-center justify-center text-white transition active:opacity-70"
             >
-              <span>Manage Phases</span>
-              <ChevronRight className="w-3.5 h-3.5" />
+              <SlidersHorizontal className="w-4 h-4" />
             </button>
           </div>
+        </div>
+        <h1 className="mt-3 text-[34px] leading-[41px] font-bold tracking-tight">PropStudio</h1>
+      </header>
 
-          <h3 className="text-base font-bold text-white tracking-tight">
-            {activePhase.name}
-          </h3>
-          <p className="text-xs text-[#86868b] line-clamp-2 mt-0.5">
-            {activePhase.description}
-          </p>
+      <main className="flex-1 px-5 pt-4 space-y-7 max-w-lg mx-auto w-full">
+        {/* Phase */}
+        <section>
+          <SectionTitle>Phase</SectionTitle>
+          <div className={GROUP}>
+            <button onClick={() => setIsControlCenterOpen(true)} className={`${ROW} after:left-4`}>
+              <div className="min-w-0 flex-1">
+                <p className="text-[16px] font-semibold truncate">{activePhase.name}</p>
+                <p className="text-[14px] text-[#8e8e93] line-clamp-2">{activePhase.description}</p>
+              </div>
+              <ChevronRight className="w-4 h-4 text-[#48484a] shrink-0" strokeWidth={2.5} />
+            </button>
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar px-4 pb-3 pt-1">
+              {phases.map((s) => (
+                <button
+                  key={s.id}
+                  onClick={() => switchPhase(s.id)}
+                  className={`h-8 px-3.5 rounded-full text-[14px] font-medium whitespace-nowrap transition active:opacity-70 ${
+                    s.id === activePhaseId ? 'bg-[#0a84ff] text-white' : 'bg-[#2c2c2e] text-[#ebebf5]/60'
+                  }`}
+                >
+                  {s.name.split(':')[0]}
+                </button>
+              ))}
+            </div>
+          </div>
+        </section>
 
-          {/* Quick Phase Selector Buttons */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pt-3 no-scrollbar text-xs">
-            {phases.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => switchPhase(s.id)}
-                className={`px-3 py-1.5 rounded-xl whitespace-nowrap transition font-semibold ${
-                  s.id === activePhaseId
-                    ? 'bg-white text-black shadow-sm'
-                    : 'bg-white/[0.06] text-[#86868b] hover:bg-white/10 hover:text-white'
-                }`}
-              >
-                {s.name.split(':')[0]}
+        {/* Platforms */}
+        <section>
+          <SectionTitle>Platforms</SectionTitle>
+          <div className={GROUP}>
+            {platforms.map((plat) => (
+              <button key={plat.id} onClick={() => setCurrentPlatform(plat.id)} className={`${ROW} after:left-[76px]`}>
+                <div className="shrink-0 [&>div]:rounded-[11px] [&>div]:shadow-none">
+                  <PlatformCardLogo platform={plat.id} size="md" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[16px] font-semibold truncate">{plat.name}</p>
+                  <p className="text-[14px] text-[#8e8e93] truncate tabular-nums">{plat.statSnippet}</p>
+                </div>
+                <span className="text-[15px] text-[#8e8e93] tabular-nums shrink-0">{plat.badge}</span>
+                <ChevronRight className="w-4 h-4 text-[#48484a] shrink-0 -ml-1" strokeWidth={2.5} />
               </button>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* Fictional Platform Grid */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between px-1">
-            <span className="text-xs font-bold text-[#86868b] uppercase tracking-wider">
-              Select Fictional Platform
-            </span>
-            <span className="text-[10px] text-[#636366]">4 Simulated Props</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {platforms.map((plat) => (
-              <div
-                key={plat.id}
-                onClick={() => setCurrentPlatform(plat.id)}
-                className="group relative rounded-[22px] bg-[#121214] hover:bg-[#18181b] border border-white/[0.08] p-4 shadow-xl cursor-pointer transition-all active:scale-[0.98] overflow-hidden"
-              >
-                <div className="flex items-start justify-between">
-                  <PlatformCardLogo platform={plat.id} size="md" />
-                  {plat.badge && (
-                    <span className="text-xs font-bold text-white/90 bg-white/10 border border-white/10 px-2 py-0.5 rounded-full font-mono">
-                      {plat.badge}
-                    </span>
-                  )}
-                </div>
-
-                <div className="mt-3.5">
-                  <h4 className="text-base font-bold text-white group-hover:text-blue-400 transition">
-                    {plat.name}
-                  </h4>
-                  <p className="text-xs text-[#86868b] font-medium">{plat.sublabel}</p>
-                  <p className="text-[11px] text-[#636366] mt-2 font-mono truncate">
-                    {plat.statSnippet}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Downloadable Home Screen Icons + iPhone tutorial */}
+        {/* Downloadable icons + how-to */}
         <HomeScreenIcons />
 
-        {/* Filmmaker Quick Notification Triggers */}
-        <div className="rounded-[22px] bg-[#121214] border border-white/[0.08] p-4 shadow-xl space-y-3">
-          <span className="text-xs font-bold text-[#86868b] uppercase tracking-wider block">
-            Filmmaking Quick Triggers
-          </span>
-
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <button
-              onClick={() => {
-                triggerNotification({
-                  id: `notif-${Date.now()}`,
-                  platform: 'shopify',
-                  title: 'New order received',
-                  message: `${activePhase.shopify.recentOrders[0]?.customerName || 'Elena Vance'} placed order #${Math.floor(1000 + Math.random() * 9000)}`,
-                  amount: `+$185.00`,
-                  timestamp: 'now',
-                });
-              }}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 text-slate-200 transition text-left"
-            >
-              <BellRing className="w-4 h-4 text-emerald-400 shrink-0" />
-              <span>Simulate Order Ping</span>
-            </button>
-
-            <button
-              onClick={() => {
-                triggerNotification({
-                  id: `notif-${Date.now()}`,
-                  platform: 'bank',
-                  title: 'Wire Deposit Cleared',
-                  message: `Wire transfer of $14,200.00 from Stripe Payments has settled.`,
-                  amount: `+$14,200`,
-                  timestamp: 'now',
-                });
-              }}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 text-slate-200 transition text-left"
-            >
-              <BellRing className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>Simulate Deposit Wire</span>
-            </button>
-
-            <button
-              onClick={() => {
-                triggerNotification({
-                  id: `notif-${Date.now()}`,
-                  platform: 'youtube',
-                  title: 'Trending Milestone',
-                  message: 'Your video just passed 50,000 views in the first 24 hours!',
-                  amount: '+50k',
-                  timestamp: 'now',
-                });
-              }}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 text-slate-200 transition text-left"
-            >
-              <BellRing className="w-4 h-4 text-red-400 shrink-0" />
-              <span>Simulate Viral Spike</span>
-            </button>
-
-            <button
-              onClick={() => setIsLockScreenVisible(true)}
-              className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/5 text-slate-200 transition text-left"
-            >
-              <Lock className="w-4 h-4 text-blue-400 shrink-0" />
-              <span>Preview Lock Screen</span>
-            </button>
+        {/* Triggers */}
+        <section>
+          <SectionTitle>Quick Triggers</SectionTitle>
+          <div className={GROUP}>
+            {triggers.map((t) => (
+              <button key={t.label} onClick={t.run} className={`${ROW} after:left-[60px]`}>
+                <span className={`w-[30px] h-[30px] rounded-[7px] flex items-center justify-center shrink-0 ${t.bg}`}>
+                  <t.icon className="w-4 h-4 text-white" />
+                </span>
+                <span className="text-[16px] flex-1 truncate">{t.label}</span>
+                <ChevronRight className="w-4 h-4 text-[#48484a] shrink-0" strokeWidth={2.5} />
+              </button>
+            ))}
           </div>
-        </div>
+        </section>
 
-        {/* Small Notice / Disclaimer */}
-        <div className="text-center py-2">
-          <p className="text-[11px] text-[#636366]">
-            Fictional Prop & Entertainment Simulation Only • No Real Bank, Crypto, or Platform Connections
-          </p>
-        </div>
+        <p className="px-6 pb-2 text-center text-[13px] leading-snug text-[#8e8e93]">
+          Fictional prop and entertainment simulation only. No real bank, crypto, or platform connections.
+        </p>
       </main>
     </div>
   );

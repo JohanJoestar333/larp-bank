@@ -16,7 +16,7 @@ export const PWAInstallButton: React.FC<{ compact?: boolean }> = ({ compact = fa
     return (
       <button
         onClick={install}
-        className={`flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 font-medium text-white shadow-lg shadow-blue-500/20 hover:from-blue-500 hover:to-indigo-500 active:scale-95 transition-all ${
+        className={`flex items-center gap-2 rounded-full bg-[#0a84ff] font-medium text-white active:opacity-80 transition ${
           compact ? 'px-3 py-1.5 text-xs' : 'px-4 py-2.5 text-sm'
         }`}
       >
@@ -32,12 +32,12 @@ export const PWAInstallButton: React.FC<{ compact?: boolean }> = ({ compact = fa
       <>
         <button
           onClick={() => setShowIOSGuide(true)}
-          className={`flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 font-medium text-slate-200 hover:bg-slate-700/80 active:scale-95 transition-all ${
+          className={`flex items-center gap-1.5 rounded-full bg-[#1c1c1e] font-medium text-[#0a84ff] active:opacity-80 transition ${
             compact ? 'px-2.5 py-1.5 text-xs' : 'px-3.5 py-2 text-sm'
           }`}
         >
-          <Share2 className={compact ? 'w-3.5 h-3.5 text-blue-400' : 'w-4 h-4 text-blue-400'} />
-          <span>Add to iPhone Home</span>
+          <Share2 className={compact ? 'w-3.5 h-3.5' : 'w-4 h-4'} />
+          <span>Add to Home</span>
         </button>
 
         {showIOSGuide && (
