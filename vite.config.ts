@@ -28,7 +28,7 @@ export default defineConfig(() => {
         manifest: {
           id: '/',
           name: 'PropStudio: Fictional Dashboards',
-          short_name: 'PropStudio',
+          short_name: 'Studio',
           description: 'Fictional dashboard prop simulator for filming and investment series.',
           theme_color: '#090d16',
           background_color: '#090d16',

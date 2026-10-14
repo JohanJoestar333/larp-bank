@@ -50,7 +50,7 @@ export const IOSNotificationBanner: React.FC = () => {
   };
 
   return (
-    <div className="fixed top-2 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 animate-in slide-in-from-top-4 duration-300">
+    <div className="fixed top-[max(env(safe-area-inset-top),8px)] left-3 right-3 sm:left-auto sm:right-6 sm:w-96 z-50 animate-in slide-in-from-top-4 duration-300">
       <div
         onClick={() => {
           setCurrentPlatform(activeNotification.platform);

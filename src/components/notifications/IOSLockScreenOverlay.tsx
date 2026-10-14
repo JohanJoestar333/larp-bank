@@ -72,7 +72,7 @@ export const IOSLockScreenOverlay: React.FC = () => {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 backdrop-blur-2xl text-white p-6 select-none animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex flex-col justify-between bg-black/95 backdrop-blur-2xl text-white p-6 pt-[max(env(safe-area-inset-top),24px)] pb-[max(env(safe-area-inset-bottom),24px)] select-none animate-in fade-in duration-200">
       {/* Top Lock & Dismiss */}
       <div className="flex items-center justify-between pt-2">
         <button

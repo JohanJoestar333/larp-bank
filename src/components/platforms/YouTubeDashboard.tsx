@@ -117,7 +117,7 @@ export const YouTubeDashboard: React.FC = () => {
       )}
 
       {/* Studio Header */}
-      <header className="sticky top-0 z-30 flex items-center justify-between px-4 py-3 bg-black/90 backdrop-blur-xl border-b border-white/[0.06]">
+      <header className="sticky top-0 z-30 flex items-center justify-between px-4 pb-3 pt-[max(env(safe-area-inset-top),12px)] bg-black/90 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="flex items-center gap-3">
           <button
             onClick={() => setCurrentPlatform('launcher')}
